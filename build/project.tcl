@@ -14,6 +14,8 @@ namespace eval ::project {
     
     namespace eval ::sdk {
 	variable workspace "none"
+	variable hw_project "hw_platform_0"
+	variable bsp_suffix "bsp_0"
     }
     
     namespace eval ::deploy {

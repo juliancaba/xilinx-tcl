@@ -4,12 +4,12 @@ package provide deploy 1.0
 proc ::deploy::upload_binaries {} {
     #global workspace
 	
-    connect
-    fpga $::sdk::workspace/fpga.bit	
+    connect	
     targets -set -filter {name =~ "ARM*#0"}
     rst
+    fpga $::sdk::workspace/fpga.bit
 	
-    source $::sdk::workspace/hw_platform_0/ps7_init.tcl
+    source $::sdk::workspace/$::sdk::hw_project/ps7_init.tcl
     ps7_init
     ps7_post_config
     #	catch {stop}

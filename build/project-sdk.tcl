@@ -1,24 +1,24 @@
-package provide sdk 1.0
+package provide mysdk 1.0
 
 
 
 proc ::sdk::create_sw_project {os_type src_files} {
+    set hw_project "hw_platform_0"
+    set bsp_name "bsp_0"
+    
     sdk setws $::sdk::workspace
     
     file delete -force $::sdk::workspace/.metadata
     file delete -force $::sdk::workspace/.Xil
 
-    sdk createhw -name hw_platform_0 -hwspec $::sdk::workspace/system_top.hdf
+    sdk createhw -name $hw_project -hwspec $::sdk::workspace/system_top.hdf
     
-    source /opt/xilinx-tcl/oss/$os_type.tcl
-    
-    # switch $os_type {
-    # 	standalone {
-    # 	    createbsp -name standalone_bsp_0 -hwproject hw_platform_0 -proc ps7_cortexa9_0 -os standalone
-    # 	    createapp -name app -app {Empty Application} -bsp standalone_bsp_0 -hwproject hw_platform_0 -proc ps7_cortexa9_0
-    # 	}
-    # }
+    loadTCL /opt/xilinx-tcl/os/$os_type.tcl
 
+    ::os::setProperties $::board::hard_processor $bsp_name $hw_project
+    ::os::create_bsp
+    ::os::create_empty_app "app" 
+    
     foreach f $src_files {
 	file copy -force $f $::sdk::workspace/app/src 
     }

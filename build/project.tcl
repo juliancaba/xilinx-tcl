@@ -29,12 +29,13 @@ proc ::project::setProjectName {project_name} {
 
 
 proc ::project::setBoard {board} {
-    set filename /opt/xilinx-tcl/boards/$board.tcl
-    if ![file exist $filename] {
-	puts "ERROR: Board specification could not be found in $filename"
-	exit 1
-    }
-    source $filename
+    loadTCL /opt/xilinx-tcl/boards/$board.tcl
+    # set filename /opt/xilinx-tcl/boards/$board.tcl
+    # if ![file exist $filename] {
+    # 	puts "ERROR: Board specification could not be found in $filename"
+    # 	exit 1
+    # }
+    # source $filename
      set ::project::device_part [::board::getDevicePart]
     set ::project::board_part [::board::getBoardPart [getToolchainVersion]]
 }
@@ -46,12 +47,13 @@ proc ::project::setBlockDesignName {bd_name} {
 
 
 proc ::project::setProperties {project_name board} {
-    set filename /opt/xilinx-tcl/boards/$board.tcl
-    if ![file exist $filename] {
-	puts "ERROR: Board specification could not be found in $filename"
-	exit 1
-    }
-    source $filename
+    loadTCL /opt/xilinx-tcl/boards/$board.tcl
+    # set filename /opt/xilinx-tcl/boards/$board.tcl
+    # if ![file exist $filename] {
+    # 	puts "ERROR: Board specification could not be found in $filename"
+    # 	exit 1
+    # }
+    # source $filename
     set ::project::device_part [::board::getDevicePart]
     set ::project::board_part [::board::getBoardPart [getToolchainVersion]]
     set ::project::project_name $project_name

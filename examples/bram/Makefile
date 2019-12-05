@@ -1,4 +1,5 @@
 PRJ = test
+BOARD = zed
 SRC_FILES =
 
 TCL_FILE = system.tcl
@@ -16,7 +17,7 @@ $(PRJ).xpr: $(SRC_FILES) clean-all
 	$(VIVADO) $(TCL_FILE)
 
 $(PRJ).sdk/app/Debug/app.elf:
-	xsct sw.tcl $(PRJ)
+	xsct sw.tcl $(BOARD) $(PRJ)
 
 run:
 	xsct run.tcl $(PRJ)

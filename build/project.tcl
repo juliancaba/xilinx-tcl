@@ -73,3 +73,5 @@ source /opt/xilinx-tcl/build/project-hw.tcl
 source /opt/xilinx-tcl/build/project-bd.tcl
 source /opt/xilinx-tcl/build/project-sdk.tcl
 source /opt/xilinx-tcl/build/project-deploy.tcl
+
+source /opt/xilinx-tcl/ips/ips.tcl

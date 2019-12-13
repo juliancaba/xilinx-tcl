@@ -19,77 +19,6 @@ proc ::bd::wrap_bd {} {
 }
 
 
-proc ::bd::create_ip {ip_type ip_name options} {
-
-    set ip "none"
-	
-    # create IP
-    switch $ip_type {		
-	axi_dma { set ip "xilinx.com:ip:axi_dma" }
-	ps7 {set ip "xilinx.com:ip:processing_system7"}
-	axis_data_fifo {set ip "xilinx.com:ip:axis_data_fifo"}
-	bram_ctrl {set ip "xilinx.com:ip:axi_bram_ctrl"}
-    }
-
-    set ref [create_bd_cell -type ip -vlnv $ip $ip_name]
-
-    # apply presets for PS7
-    if [regexp "ps7" $ip_type] {
-	apply_bd_automation -rule xilinx.com:bd_rule:processing_system7 \
-	    -config {make_external "FIXED_IO, DDR" apply_board_preset "1" \
-			 Master "Disable" Slave "Disable" }  $ref
-    }
-	
-    # apply options for core
-    if {[llength $options] != 0}  {
-	for {set i 0} {$i < [llength $options]} {incr i 2} {
-	    set config_option [get_config_options $ip_type [lindex $options $i] [lindex $options  [expr {$i+1}]]]
-	    puts $config_option
-	    set_property -dict $config_option [get_bd_cell $ip_name]
-	}
-		
-	#foreach option $options {
-	#	set config_option [get_config_option $ip_type $option]
-	#	puts $config_option
-	#	set_property -dict $config_option $ref
-	#}
-    }
-    
-    return $ref
-}
-
-
-proc ::bd::get_config_options {ip_type option value} {
-    switch $ip_type {
-	ps7 {
-	    switch $option {
-		hp0 { return [list CONFIG.PCW_USE_S_AXI_HP0 [expr {$value}]]  }
-	    }
-	}
-
-	axi_dma {
-	    switch $option {
-		sg { return [list CONFIG.c_include_sg [expr {$value}] \
-				 CONFIG.c_sg_include_stscntrl_strm [expr {$value}]]}				
-	    }
-	}
-
-	axis_data_fifo {
-	    switch $option {
-		depth { return [list CONFIG.FIFO_DEPTH [expr {$value}]] }
-	    }
-	}
-
-	bram_ctrl {
-	    switch $option {
-		protocol { return [list CONFIG.PROTOCOL [expr {$value}]] }
-		ports {return [list CONFIG.SINGLE_PORT_BRAM [expr {$value}]] }
-	    }
-	}
-    }
-}
-
-
 # bus_type:
 #   - axi4
 # connect_ip: ip to be used for the bus interconnection
@@ -113,12 +42,6 @@ proc ::bd::automate_bus {bus_type connect_ip master slave} {
 	}
     }	
 }
-
-
-proc ::bd::build_bram {port} {
-    apply_bd_automation -rule xilinx.com:bd_rule:bram_cntlr -config {BRAM "Auto" } [get_bd_intf_pins $port]	
-}
-
 
 
 

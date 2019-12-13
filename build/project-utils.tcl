@@ -1,4 +1,5 @@
-package provide utils 1.0
+package provide project-utils 1.0
+
 
 proc getToolchainVersion {} {
     if {[catch {set vtmp [version -short]}]} {

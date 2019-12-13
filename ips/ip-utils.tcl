@@ -9,16 +9,27 @@ proc checkSizeOptions {ip_name options} {
 }
 
 
-proc replaceNoneValues {listA value} {
-    set list_tmp {}
-    for {set i 0} {$i < [llength $listA]} {incr i 1} {
-	if {[regexp [expr $i] "none" ]} {
-	    lappend list_tmp $value
+proc checkSizeValues {ip_name option values} {
+    if {[llength $values] != [llength [lsearch -all $option "none"]]} {
+	puts "ERROR: Option's size wrong for $ip_name"
+	exit 1
+    }
+}
+
+
+proc replaceNoneValues {option values} {
+    set option_tmp {}
+    set j 0
+    
+    for {set i 0} {$i < [llength $option]} {incr i 1} {
+	if {[regexp [lindex $option  $i] "none" ]} {
+	    lappend option_tmp [lindex $values $j]
+	    incr j 1
 	} else {
-	    lappend list_tmp [expr {$i}]
+	    lappend option_tmp [lindex $option $i]
 	}
     }
-    return $list_tmp
+    return $option_tmp
 }
 
 
@@ -28,8 +39,9 @@ proc setProperties {ip_name ip_options cfg_options} {
 
     for {set i 0} {$i < [llength $cfg_options]} {incr i 2} {
 	set option $ip_options_cpy([lindex $cfg_options $i])
-	set value [lindex $cfg_options [expr {$i+1}]]
-	set config_option [replaceNoneValues $option  $value]
+	set values [lindex $cfg_options [expr {$i+1}]]
+	checkSizeValues $ip_name $option $values
+	set config_option [replaceNoneValues $option  $values]
 	puts $config_option
 	set_property -dict $config_option [get_bd_cell $ip_name]
     }

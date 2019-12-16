@@ -10,7 +10,7 @@ proc ::sdk::create_sw_project {os_type src_files} {
 
     sdk createhw -name $::sdk::hw_project -hwspec $::sdk::workspace/system_top.hdf
     
-    loadTCL /opt/xilinx-tcl/os/$os_type.tcl
+    loadTCL INSTALL_PATH/os/$os_type.tcl
 
     ::os::setProperties $::board::hard_processor $::sdk::bsp_suffix $::sdk::hw_project
     ::os::create_bsp

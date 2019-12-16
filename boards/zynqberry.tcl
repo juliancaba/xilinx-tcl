@@ -4,7 +4,11 @@ package provide zynqberry 1.0
 namespace eval ::board {
     variable device_part "xc7z010clg225"
     variable hard_processor "ps7_cortexa9_0"
-    variable board_part [dict create 2018.3 "trenz.biz:te0726_m:part0:3.1" 2017.4 "trenz.biz:te0726_m:part0:3.1"]
+
+    array set board_part_versions {
+	2018.3 "trenz.biz:te0726_m:part0:3.1"
+	2017.4 "trenz.biz:te0726_m:part0:3.1"
+    }
 }
 
 
@@ -19,11 +23,12 @@ proc ::board::getProcessor {} {
 
 
 proc ::board::getBoardPart {vtoolchain} {
-    if [dict exists $::board::board_part $vtoolchain] {
-	return [dict get $::board::board_part $vtoolchain]
+    set board_part [array get ::board::board_part_versions $vtoolchain]
+    if {[llength $board_part] == 2} {
+	return [lindex $board_part 1]
     }
     puts $vtoolchain
-    puts "ERROR: Toolcahin version not supported"
+    puts "ERROR: Toolchain version not supported"
     exit 1
 }
 

@@ -1,6 +1,6 @@
 package provide project 1.0
 
-source /opt/xilinx-tcl/build/project-utils.tcl
+source INSTALL_PATH/build/project-utils.tcl
 
 
 namespace eval ::project {
@@ -31,13 +31,7 @@ proc ::project::setProjectName {project_name} {
 
 
 proc ::project::setBoard {board} {
-    loadTCL /opt/xilinx-tcl/boards/$board.tcl
-    # set filename /opt/xilinx-tcl/boards/$board.tcl
-    # if ![file exist $filename] {
-    # 	puts "ERROR: Board specification could not be found in $filename"
-    # 	exit 1
-    # }
-    # source $filename
+    loadTCL INSTALL_PATH/boards/$board.tcl
      set ::project::device_part [::board::getDevicePart]
     set ::project::board_part [::board::getBoardPart [getToolchainVersion]]
 }
@@ -49,13 +43,7 @@ proc ::project::setBlockDesignName {bd_name} {
 
 
 proc ::project::setProperties {project_name board} {
-    loadTCL /opt/xilinx-tcl/boards/$board.tcl
-    # set filename /opt/xilinx-tcl/boards/$board.tcl
-    # if ![file exist $filename] {
-    # 	puts "ERROR: Board specification could not be found in $filename"
-    # 	exit 1
-    # }
-    # source $filename
+    loadTCL INSTALL_PATH/boards/$board.tcl
     set ::project::device_part [::board::getDevicePart]
     set ::project::board_part [::board::getBoardPart [getToolchainVersion]]
     set ::project::project_name $project_name
@@ -69,9 +57,9 @@ proc ::project::setWorkspace {workspace} {
 
 
 
-source /opt/xilinx-tcl/build/project-hw.tcl
-source /opt/xilinx-tcl/build/project-bd.tcl
-source /opt/xilinx-tcl/build/project-sdk.tcl
-source /opt/xilinx-tcl/build/project-deploy.tcl
+source INSTALL_PATH/build/project-hw.tcl
+source INSTALL_PATH/build/project-bd.tcl
+source INSTALL_PATH/build/project-sdk.tcl
+source INSTALL_PATH/build/project-deploy.tcl
 
-source /opt/xilinx-tcl/ips/ips.tcl
+source INSTALL_PATH/ips/ips.tcl

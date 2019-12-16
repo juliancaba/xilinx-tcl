@@ -1,13 +1,13 @@
 package provide bram_ctrl 1.0
 
 
-source /opt/xilinx-tcl/ips/ip-utils.tcl
+source INSTALL_PATH/ips/ip-utils.tcl
 
 
 namespace eval ::bram_ctrl {
     variable ip_core_generator "xilinx.com:ip:axi_bram_ctrl"
 
-    array set options {
+    array set properties {
 	protocol {CONFIG.PROTOCOL "none"}
 	ports {CONFIG.SINGLE_PORT_BRAM "none"}
     }
@@ -15,9 +15,9 @@ namespace eval ::bram_ctrl {
 
 
 
-proc ::bram_ctrl::create_ip {ip_name options} {
+proc ::bram_ctrl::create_ip {ip_name ip_properties} {
     set ref  [create_bd_cell -type ip -vlnv $::bram_ctrl::ip_core_generator $ip_name]    
-    setProperties $ip_name [array get ::bram_ctrl::options] $options
+    setProperties $ip_name [array get ::bram_ctrl::properties] $ip_properties
     return $ref
 }
 

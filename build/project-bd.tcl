@@ -1,5 +1,7 @@
 package provide bd 1.0
 
+
+
 proc ::bd::create_bd {bd_name} {
     set ::bd::bd_name $bd_name
     create_bd_design $::bd::bd_name
@@ -44,13 +46,18 @@ proc ::bd::automate_bus {bus_type connect_ip master slave} {
 }
 
 
+proc ::bd::connect_internal_ports {port1 port2} {
+    connect_bd_net [get_bd_pins $port1] [get_bd_pins $port2]
+}
 
 
-# proc automate_clock {ip} {
-#     apply_bd_automation -rule xilinx.com:bd_rule:clkrst -config {Clk "/ps_0/FCLK_CLK0 (100 MHz)" }  [get_bd_pins fifo_0/s_axis_aclk]
-# }
+proc ::bd::connect_ports {port1 port2} {
+    connect_bd_intf_net [get_bd_intf_pins $port1] [get_bd_intf_pins $port2]
+}
 
 
-# proc connect_ports {port1 port2} {
-#     connect_bd_intf_net [get_bd_intf_pins $port1] [get_bd_intf_pins $port2]
-# }
+proc ::bd::automate_clock {ip_clk} {
+    apply_bd_automation -rule xilinx.com:bd_rule:clkrst -config {Clk "/ps_0/FCLK_CLK0 (100 MHz)" }  [get_bd_pins $ip_clk]
+}
+
+

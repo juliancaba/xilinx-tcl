@@ -19,7 +19,7 @@ namespace eval ::axi_dma {
 
 proc ::axi_dma::create_ip {ip_name ip_properties} {
     set ref  [create_bd_cell -type ip -vlnv $::axi_dma::ip_core_generator $ip_name]
-    setProperties $ip_name [arrray get ::axi_dma::properties] $ip_properties
+    setProperties $ip_name [array get ::axi_dma::properties] $ip_properties
     return $ref
 }
 

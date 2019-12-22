@@ -56,6 +56,13 @@ proc ::project::setWorkspace {workspace} {
 }
 
 
+proc ::project::addIPRepoPath {path} {
+    set_property ip_repo_paths $path [current_project]
+    update_ip_catalog
+}
+
+
+
 
 source INSTALL_PATH/build/project-hw.tcl
 source INSTALL_PATH/build/project-bd.tcl

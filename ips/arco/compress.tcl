@@ -5,7 +5,7 @@ source INSTALL_PATH/ips/ip-utils.tcl
 
 
 namespace eval ::compress {
-    variable ip_core_generator "arco_group:compress:1.0"
+    variable ip_core_generator "arco_group:user:compress:1.0"
 
     array set properties {
 	out_endianess {CONFIG.C_OUT_LITTLE_ENDIAN "none"}

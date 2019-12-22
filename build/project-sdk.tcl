@@ -2,7 +2,8 @@ package provide mysdk 1.0
 
 
 
-proc ::sdk::create_sw_project {os_type src_files} {    
+proc ::sdk::create_sw_project {os_type src_files} {
+    set $::sdk::os_type $os_type
     sdk setws $::sdk::workspace
     
     file delete -force $::sdk::workspace/.metadata
@@ -14,19 +15,28 @@ proc ::sdk::create_sw_project {os_type src_files} {
 
     ::os::setProperties $::board::hard_processor $::sdk::bsp_suffix $::sdk::hw_project
     ::os::create_bsp
-    ::os::create_empty_app "app" 
+    ::os::create_empty_app  $::sdk::sw_project_name 
     
     foreach f $src_files {
-	file copy -force $f $::sdk::workspace/app/src 
+	file copy -force $f $::sdk::workspace/$::sdk::sw_project_name/src 
     }
 
+}
+
+
+proc ::sdk::setBSPLibs {bsp_libs} {
+    foreach it $bsp_libs {	
+	setlib -bsp $::sdk::os_type\_$::sdk::bsp_suffix -lib $it
+	configapp -app $::sdk::sw_project_name libraries $it
+    }
+    updatemss -mss $::sdk::workspace/$::sdk::os_type\_$::sdk::bsp_suffix/system.mss
+    regenbsp -bsp $::sdk::os_type\_$::sdk::bsp_suffix
 }
 
 
 proc ::sdk::build {} {
     projects -build
 }
-
 
 
 proc ::sdk::patch_ps7_init {} {	

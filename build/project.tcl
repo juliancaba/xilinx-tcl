@@ -14,6 +14,8 @@ namespace eval ::project {
     
     namespace eval ::sdk {
 	variable workspace "none"
+	variable sw_project_name "app"
+	variable os_type "standalone"
 	variable hw_project "hw_platform_0"
 	variable bsp_suffix "bsp_0"
     }
@@ -53,6 +55,11 @@ proc ::project::setProperties {project_name board} {
 
 proc ::project::setWorkspace {workspace} {
     set ::sdk::workspace $workspace
+}
+
+
+proc ::project::setSWProjectName {name} {
+    set ::sdk::sw_project_name $name
 }
 
 

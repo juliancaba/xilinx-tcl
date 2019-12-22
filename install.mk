@@ -18,6 +18,8 @@ install:
 	install -v -m 444 ips/*.tcl $(DESTDIR)$(TCL_ROOT)/ips
 	install -vd $(DESTDIR)$(TCL_ROOT)/ips/xilinx
 	install -v -m 444 ips/xilinx/* $(DESTDIR)$(TCL_ROOT)/ips/xilinx
+	install -vd $(DESTDIR)$(TCL_ROOT)/ips/arco
+	install -v -m 444 ips/arco/* $(DESTDIR)$(TCL_ROOT)/ips/arco
 	install -vd $(DESTDIR)$(TCL_ROOT)/build
 	install -v -m 444 build/* $(DESTDIR)$(TCL_ROOT)/build
 

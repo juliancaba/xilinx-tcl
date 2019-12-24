@@ -1,3 +1,3 @@
 # xilinx-tcl
 
-Repo con scripts tcl para la generación de proyectos basados en FPGAs
+TCL scripts for building Xilinx-based projects

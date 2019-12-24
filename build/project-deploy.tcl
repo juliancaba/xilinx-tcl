@@ -15,10 +15,12 @@ proc ::deploy::upload_binaries {} {
     #	catch {stop}
     loadhw $::sdk::workspace/system_top.hdf
     dow $::sdk::workspace/app/Debug/app.elf
+    #con -timeout 5
 }
 
 
 proc ::deploy::run {} {
+    puts "Running ..."
     connect
     targets -set -filter {name =~ "ARM*#0"}
     con

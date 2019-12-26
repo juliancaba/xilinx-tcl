@@ -10,7 +10,6 @@ proc ::project::create_hw_project {} {
     set_property target_language VHDL [current_project]
     set_property simulator_language VHDL [current_project]	
 }
-	
 
 
 proc ::project::synth {} {

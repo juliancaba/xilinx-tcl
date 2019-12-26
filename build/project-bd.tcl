@@ -46,6 +46,11 @@ proc ::bd::automate_bus {bus_type connect_ip master slave} {
 }
 
 
+proc ::bd::add_constraints {xdcFile} {
+    read_xdc $xdcFile
+}
+
+
 proc ::bd::connect_internal_ports {port1 port2} {
     connect_bd_net [get_bd_pins $port1] [get_bd_pins $port2]
 }
@@ -53,6 +58,22 @@ proc ::bd::connect_internal_ports {port1 port2} {
 
 proc ::bd::connect_ports {port1 port2} {
     connect_bd_intf_net [get_bd_intf_pins $port1] [get_bd_intf_pins $port2]
+}
+
+
+proc ::bd::make_external_internal_ports {port name} {
+    make_bd_pins_external [get_bd_pins $port]
+    set tmpLst [split $port /]
+    set portName [lindex $tmpLst [expr {[llength $tmpLst] - 1}]]
+    set_property name $name [get_bd_ports $portName\_0]
+}
+
+
+proc ::bd::make_external {port name} {
+    make_bd_intf_pins_external [get_bd_intf_pins $port]
+    set tmpLst [split $port /]
+    set portName [lindex $tmpLst [expr {[llength $tmpLst] - 1}]]
+    set_property name $name [get_bd_intf_ports $portName\_0]
 }
 
 

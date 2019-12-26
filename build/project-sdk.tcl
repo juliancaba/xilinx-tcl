@@ -16,11 +16,19 @@ proc ::sdk::create_sw_project {os_type src_files} {
     ::os::setProperties $::board::hard_processor $::sdk::bsp_suffix $::sdk::hw_project
     ::os::create_bsp
     ::os::create_empty_app  $::sdk::sw_project_name 
-    
+
     foreach f $src_files {
-	file copy -force $f $::sdk::workspace/$::sdk::sw_project_name/src 
+	file copy -force $f $::sdk::workspace/$::sdk::sw_project_name/src
     }
 
+}
+
+
+proc ::sdk::add_files_from_folder {folder} {
+    set files [glob -tails -dir $folder *{.c,.cc,.cpp,.h,.hh,.hpp}]
+    foreach f $files {
+	file copy -force $f $::sdk::workspace/$::sdk::sw_project_name/src
+    }    
 }
 
 

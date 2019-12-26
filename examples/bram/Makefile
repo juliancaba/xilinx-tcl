@@ -9,8 +9,7 @@ VIVADO = vivado -mode batch -source
 TMP_FILES += *~ *.log *.jou
 PRJ_FILES += *.cache *.hw *.ip_user_files *.srcs *.runs *.sdk *.sim *.xpr    
 
-all: $(PRJ).xpr $(PRJ).sdk/app/Debug/app.elf
-	run
+all: $(PRJ).xpr $(PRJ).sdk/app/Debug/app.elf run
 
 
 $(PRJ).xpr: $(SRC_FILES) clean-all

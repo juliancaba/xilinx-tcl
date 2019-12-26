@@ -26,8 +26,9 @@ proc ::project::export_hardware {} {
     file mkdir [pwd]/$::project::project_name.sdk
     write_hwdef -force  -file [pwd]/$::project::project_name.sdk/system_top.hdf
     # 2019 version >> write_hw_platform -force  -file [pwd]/$::project::project_name.sdk/system_top.hdf
-    file copy -force [pwd]/$::project::project_name.runs/impl_1/sch_wrapper.sysdef [pwd]/$::project::project_name.sdk/sch_wrapper.hdf
-    file copy -force [pwd]/$::project::project_name.runs/impl_1/sch_wrapper.bit [pwd]/$::project::project_name.sdk/fpga.bit	
+    file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.sysdef [pwd]/$::project::project_name.sdk/system_top.hdf
+    ###$::bd::bd_name\_wrapper.hdf
+    file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.bit [pwd]/$::project::project_name.sdk/fpga.bit	
 }
 
 

@@ -27,7 +27,7 @@ proc ::sdk::create_sw_project {os_type src_files} {
 proc ::sdk::add_files_from_folder {folder} {
     set files [glob -tails -dir $folder *{.c,.cc,.cpp,.h,.hh,.hpp}]
     foreach f $files {
-	file copy -force $f $::sdk::workspace/$::sdk::sw_project_name/src
+	file copy -force $folder/$f $::sdk::workspace/$::sdk::sw_project_name/src
     }    
 }
 

@@ -1,9 +1,11 @@
 source /opt/xilinx-tcl/build/project.tcl
 
-set workspace [pwd]/[lindex $argv 0].sdk
+set workspace [pwd]/[lindex $argv 1].sdk
 project::setWorkspace $workspace
 
-deploy::upload_binaries
-deploy::run
+set board [lindex $argv 0]
+
+deploy::upload_binaries $board
+deploy::run $board
 
 exit

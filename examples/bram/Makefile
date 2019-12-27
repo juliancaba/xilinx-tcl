@@ -19,7 +19,7 @@ $(PRJ).sdk/app/Debug/app.elf:
 	xsct sw.tcl $(BOARD) $(PRJ)
 
 run:
-	xsct run.tcl $(PRJ)
+	xsct run.tcl $(BOARD) $(PRJ)
 
 
 clean:clean-all

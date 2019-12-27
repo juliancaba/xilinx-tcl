@@ -34,7 +34,7 @@ proc ::project::setProjectName {project_name} {
 
 proc ::project::setBoard {board} {
     loadTCL INSTALL_PATH/boards/$board.tcl
-     set ::project::device_part [::board::getDevicePart]
+    set ::project::device_part [::board::getDevicePart]
     set ::project::board_part [::board::getBoardPart [getToolchainVersion]]
 }
 

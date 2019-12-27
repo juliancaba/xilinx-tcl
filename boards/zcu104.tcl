@@ -32,3 +32,40 @@ proc ::board::getBoardPart {vtoolchain} {
     exit 1
 }
 
+
+proc ::board::upload_binaries {} {
+    connect    
+    targets -set -filter {name =~ "PSU"}
+    fpga $::sdk::workspace/fpga.bit
+    puts "PL configured"
+
+    configparams force-mem-access 1
+    targets -set -filter {name =~"APU*"}
+    loadhw $::sdk::workspace/system_top.hdf
+    source $::sdk::workspace/$::sdk::hw_project/psu_init.tcl
+    puts $::sdk::workspace/$::sdk::hw_project/psu_init.tcl
+    psu_init
+
+    after 1000
+    psu_ps_pl_isolation_removal
+    after 1000
+    psu_ps_pl_reset_config
+
+    targets -set -filter {name =~ "*A53*0"}
+    rst -processor
+    
+    dow $::sdk::workspace/$::sdk::sw_project_name/Debug/$::sdk::sw_project_name.elf
+    configparams force-mem-access 0
+    puts "PS configured"
+}
+
+
+proc ::board::run {} {
+    connect
+    targets -set -filter {name =~ "Cortex-A*#0"}
+    con
+    after 1000
+    exit	
+}
+
+

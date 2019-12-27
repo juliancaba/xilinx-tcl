@@ -15,16 +15,15 @@ namespace eval ::psu_e {
 
 
 
-# proc ::psu_e::setPresets {ref} {
-#     apply_bd_automation -rule xilinx.com:bd_rule:processing_system7 \
-# 	-config {make_external "FIXED_IO, DDR" apply_board_preset "1" \
-# 		     Master "Disable" Slave "Disable" }  $ref
-# }
+proc ::psu_e::setPresets {ref} {
+    apply_bd_automation -rule xilinx.com:bd_rule:zynq_ultra_ps_e -config {apply_board_preset "1" } $ref
+    set_property -dict [list CONFIG.PSU__USE__M_AXI_GP1 {0}] $ref
+}
 
 
 proc ::psu_e::create_ip {ip_name ip_properties} {
     set ref  [create_bd_cell -type ip -vlnv $::psu_e::ip_core_generator $ip_name]
-    #psu_e::setPresets $ref
+    psu_e::setPresets $ref
     setProperties $ip_name [array get ::psu_e::properties] $ip_properties
     return $ref
 }

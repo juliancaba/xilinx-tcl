@@ -55,5 +55,14 @@ proc ::sdk::patch_ps7_init {} {
     exec sed -i -e "s/set APU/variable APU/g" $init_file
     exec sed -i -e "s/set PCW_SILICON/variable PCW_SILICON/g" $init_file
 
-    puts "Patch ps7_init file ($init_file)" 
+    puts "INFO: Patch ps7_init file ($init_file)" 
+}
+
+
+proc ::sdk::patch_psu_init {} {	
+    set init_file $::sdk::workspace/$::sdk::hw_project/psu_init.tcl
+	
+    exec sed -i -e "s/set psu/variable psu/g" $init_file
+   
+    puts "INFO: Patch psu_init file ($init_file)" 
 }

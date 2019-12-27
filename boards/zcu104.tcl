@@ -34,29 +34,31 @@ proc ::board::getBoardPart {vtoolchain} {
 
 
 proc ::board::upload_binaries {} {
-    connect    
+    connect
+    source /opt/Xilinx/SDK/2018.3/scripts/sdk/util/zynqmp_utils.tcl
+
     targets -set -filter {name =~ "PSU"}
     fpga $::sdk::workspace/fpga.bit
-    puts "PL configured"
+    puts "INFO: PL configured"
 
-    configparams force-mem-access 1
     targets -set -filter {name =~"APU*"}
     loadhw $::sdk::workspace/system_top.hdf
+    configparams force-mem-access 1
+    targets -set -filter {name =~"APU*"}
     source $::sdk::workspace/$::sdk::hw_project/psu_init.tcl
     puts $::sdk::workspace/$::sdk::hw_project/psu_init.tcl
     psu_init
-
     after 1000
     psu_ps_pl_isolation_removal
     after 1000
     psu_ps_pl_reset_config
+    catch {psu_protection}
 
     targets -set -filter {name =~ "*A53*0"}
-    rst -processor
-    
+    rst -processor    
     dow $::sdk::workspace/$::sdk::sw_project_name/Debug/$::sdk::sw_project_name.elf
     configparams force-mem-access 0
-    puts "PS configured"
+    puts "INFO: PS configured"
 }
 
 

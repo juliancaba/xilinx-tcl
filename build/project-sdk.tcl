@@ -3,6 +3,8 @@ package provide mysdk 1.0
 
 
 proc ::sdk::create_sw_project {os_type src_files} {        
+    variable VITIS
+    
     set $::sdk::os_type $os_type
     sdk setws $::sdk::workspace
     
@@ -12,8 +14,14 @@ proc ::sdk::create_sw_project {os_type src_files} {
     loadTCL INSTALL_PATH/os/$os_type.tcl
     
     ::os::setProperties $::board::hard_processor $::sdk::bsp_suffix $::sdk::hw_project
-    
-    alias_sdk_create_app
+
+    if {$::sdk::sw_ide == $VITIS} {
+	::os::create_empty_app  $::sdk::sw_project_name
+    } else {
+	sdk createhw -name $::sdk::hw_project -hwspec $::sdk::workspace/system_top.hdf
+	::os::create_bsp
+	::os::create_empty_app  $::sdk::sw_project_name
+    }
 
     foreach f $src_files {
 	file copy -force $f $::sdk::workspace/$::sdk::sw_project_name/src
@@ -41,13 +49,19 @@ proc ::sdk::setBSPLibs {bsp_libs} {
 
 
 proc ::sdk::build {} {
-    alias_sdk_build $::sdk::sw_project_name
+    variable VITIS
+
+    if {$::sdk::sw_ide == $VITIS} {
+	app build -name $::sdk::sw_project_name
+    } else {
+	projects -build
+    }    
 }
 
 
-proc ::sdk::patch_ps7_init {} {    
-    set init_file [alias_get_init_file ps7_init.tcl]
-	
+proc ::sdk::patch_ps7_init {} {
+    set init_file [get_init_file ps7 $::sdk::workspace $::sdk::hw_project]
+
     #exec sed -i -e "s/variable PCW_SILICON/global PCW_SILICON/g"  $init_file
     #exec sed -i -e "s/variable APU/global APU/g"  $init_file	
     exec sed -i -e "s/set APU/variable APU/g" $init_file
@@ -58,8 +72,8 @@ proc ::sdk::patch_ps7_init {} {
 
 
 proc ::sdk::patch_psu_init {} {
-    set init_file [alias_get_init_file psu_init.tcl]
-    
+    set init_file [get_init_file psu $::sdk::workspace $::sdk::hw_project]
+	    
     exec sed -i -e "s/set psu/variable psu/g" $init_file
    
     puts "INFO: Patch psu_init file ($init_file)" 

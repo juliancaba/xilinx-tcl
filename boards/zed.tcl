@@ -43,7 +43,7 @@ proc ::board::upload_binaries {} {
     rst
     fpga $::sdk::workspace/fpga.bit
 	
-    source [alias_get_init_file ps7_init.tcl]
+    source [get_init_file ps7 $::sdk::workspace $::sdk::hw_project]
     ps7_init
     ps7_post_config
     loadhw $::sdk::workspace/system_top.hdf

@@ -1,14 +1,19 @@
 package provide hw 1.0
 
 
-proc ::project::create_hw_project {} {	
+proc ::project::create_hw_project {} {
+    variable VITIS
+    
     set current_dir [pwd]
     create_project -force $::project::project_name $current_dir -part $::project::device_part
 
     set_property board_part $::project::board_part [current_project]
     set_property target_language VHDL [current_project]
     set_property simulator_language VHDL [current_project]
-    alias_set_extra_property
+
+    if {$::project::sw_ide == $VITIS} {
+	set_property platform.name $::board::platform_name [current_project]
+    }
 }
 
 
@@ -23,13 +28,17 @@ proc ::project::synth {} {
 
 
 proc ::project::export_hardware {} {
+    variable VITIS
+    
     file mkdir [pwd]/$::project::project_name.sdk
-    alias_write_hw_tool
-    #$write_hw_tool -fixed -force -file [pwd]/$::project::project_name.sdk/system_top.$write_hw_extension
-    #write_hwdef -force  -file [pwd]/$::project::project_name.sdk/system_top.hdf
-    # 2019 version >> write_hw_platform -force  -file [pwd]/$::project::project_name.sdk/system_top.hdf
-
-    #file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.$write_hw_hdf_ext [pwd]/$::project::project_name.sdk/system_top.hdf
+    
+    if {$::project::sw_ide == $VITIS} {
+	write_hw_platform -fixed -force -file [pwd]/$::project::project_name.sdk/system_top.xsa
+    file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.hwdef [pwd]/$::project::project_name.sdk/system_top.hdf
+    } else {
+	write_hwdef -force  -file [pwd]/$::project::project_name.sdk/system_top.hdf
+	file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.sysdef [pwd]/$::project::project_name.sdk/system_top.hdf
+    }
 
     file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.bit [pwd]/$::project::project_name.sdk/fpga.bit	
 }

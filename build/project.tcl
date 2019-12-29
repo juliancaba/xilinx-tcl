@@ -1,10 +1,13 @@
 package provide project 1.0
 
+
 source INSTALL_PATH/build/project-utils.tcl
-source INSTALL_PATH/versions/[getToolchainVersion].tcl
+
 
 
 namespace eval ::project {
+    source INSTALL_PATH/build/project-defines.tcl
+    variable sw_ide [getSW_IDE]
     variable project_name "none"
     variable device_part "none"
     variable board_part "none"
@@ -14,6 +17,8 @@ namespace eval ::project {
     }
     
     namespace eval ::sdk {
+	source INSTALL_PATH/build/project-defines.tcl
+	variable sw_ide [getSW_IDE]
 	variable workspace "none"
 	variable sw_project_name "app"
 	variable os_type "standalone"

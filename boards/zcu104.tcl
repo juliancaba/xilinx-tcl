@@ -47,7 +47,7 @@ proc ::board::upload_binaries {} {
     configparams force-mem-access 1
     targets -set -filter {name =~"APU*"}
     
-    source [alias_get_init_file psu_init.tcl]
+    source [get_init_file psu $::sdk::workspace $::sdk::hw_project]
     psu_init
     after 1000
     psu_ps_pl_isolation_removal

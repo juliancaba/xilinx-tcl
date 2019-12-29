@@ -1,6 +1,7 @@
 package provide standalone 1.0
 
 namespace eval ::os {
+    source INSTALL_PATH/build/project-utils.tcl
     variable hard_processor "none"
     variable bsp_name "none"
     variable hw_project "none"
@@ -35,6 +36,12 @@ proc ::os::create_bsp {} {
 
 
 proc ::os::create_empty_app {name} {
-    #createapp -name $name -app {Empty Application} -bsp $::os::bsp_name -hwproject $::os::hw_project -proc  $::os::hard_processor
-    alias_os_create_app $name standalone
+    variable VITIS
+
+    if {$::sdk::sw_ide == $VITIS} {
+	app create -name $name -template {Empty Application} -hw [pwd]/$::project::project_name.sdk/system_top.xsa -proc  $::os::hard_processor -os standalone
+    } else {
+	createapp -name $name -app {Empty Application} -bsp $::os::bsp_name -hwproject $::os::hw_project -proc  $::os::hard_processor
+    }
+	
 }

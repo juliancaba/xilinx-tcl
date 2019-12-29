@@ -4,6 +4,7 @@ package provide zed 1.0
 namespace eval ::board {
     variable device_part "xc7z020clg484-1"
     variable hard_processor "ps7_cortexa9_0"
+    variable platform_name "zed" 
 
     array set board_part_versions {
 	2019.2 "em.avnet.com:zed:part0:1.4"
@@ -42,7 +43,7 @@ proc ::board::upload_binaries {} {
     rst
     fpga $::sdk::workspace/fpga.bit
 	
-    source $::sdk::workspace/$::sdk::hw_project/ps7_init.tcl
+    source [alias_get_init_file ps7_init.tcl]
     ps7_init
     ps7_post_config
     loadhw $::sdk::workspace/system_top.hdf

@@ -4,6 +4,7 @@ package provide zcu104 1.0
 namespace eval ::board {
     variable device_part "xczu7ev-ffvc1156-2-e"
     variable hard_processor "psu_cortexa53_0"
+    variable platform_name "ZCU104"
 
     array set board_part_versions {
 	2019.2 "xilinx.com:zcu104:part0:1.1"
@@ -45,8 +46,8 @@ proc ::board::upload_binaries {} {
     loadhw $::sdk::workspace/system_top.hdf
     configparams force-mem-access 1
     targets -set -filter {name =~"APU*"}
-    source $::sdk::workspace/$::sdk::hw_project/psu_init.tcl
-    puts $::sdk::workspace/$::sdk::hw_project/psu_init.tcl
+    
+    source [alias_get_init_file psu_init.tcl]
     psu_init
     after 1000
     psu_ps_pl_isolation_removal

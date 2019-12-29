@@ -35,5 +35,6 @@ proc ::os::create_bsp {} {
 
 
 proc ::os::create_empty_app {name} {
-    createapp -name $name -app {Empty Application} -bsp $::os::bsp_name -hwproject $::os::hw_project -proc  $::os::hard_processor
+    #createapp -name $name -app {Empty Application} -bsp $::os::bsp_name -hwproject $::os::hw_project -proc  $::os::hard_processor
+    alias_os_create_app $name standalone
 }

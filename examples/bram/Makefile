@@ -7,7 +7,7 @@ TCL_FILE = system.tcl
 VIVADO = vivado -mode batch -source
 
 TMP_FILES += *~ *.log *.jou
-PRJ_FILES += *.cache *.hw *.ip_user_files *.srcs *.runs *.sdk *.sim *.xpr    
+PRJ_FILES += *.cache *.hw *.ip_user_files *.srcs *.runs *.sdk *.sim *.xpr *.xsa    
 
 all: $(PRJ).xpr $(PRJ).sdk/app/Debug/app.elf run
 

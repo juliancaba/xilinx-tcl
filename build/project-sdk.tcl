@@ -2,20 +2,18 @@ package provide mysdk 1.0
 
 
 
-proc ::sdk::create_sw_project {os_type src_files} {
+proc ::sdk::create_sw_project {os_type src_files} {        
     set $::sdk::os_type $os_type
     sdk setws $::sdk::workspace
     
     file delete -force $::sdk::workspace/.metadata
     file delete -force $::sdk::workspace/.Xil
-
-    sdk createhw -name $::sdk::hw_project -hwspec $::sdk::workspace/system_top.hdf
     
     loadTCL INSTALL_PATH/os/$os_type.tcl
-
+    
     ::os::setProperties $::board::hard_processor $::sdk::bsp_suffix $::sdk::hw_project
-    ::os::create_bsp
-    ::os::create_empty_app  $::sdk::sw_project_name 
+    
+    alias_sdk_create_app
 
     foreach f $src_files {
 	file copy -force $f $::sdk::workspace/$::sdk::sw_project_name/src
@@ -43,12 +41,12 @@ proc ::sdk::setBSPLibs {bsp_libs} {
 
 
 proc ::sdk::build {} {
-    projects -build
+    alias_sdk_build $::sdk::sw_project_name
 }
 
 
-proc ::sdk::patch_ps7_init {} {	
-    set init_file $::sdk::workspace/$::sdk::hw_project/ps7_init.tcl
+proc ::sdk::patch_ps7_init {} {    
+    set init_file [alias_get_init_file ps7_init.tcl]
 	
     #exec sed -i -e "s/variable PCW_SILICON/global PCW_SILICON/g"  $init_file
     #exec sed -i -e "s/variable APU/global APU/g"  $init_file	
@@ -59,9 +57,9 @@ proc ::sdk::patch_ps7_init {} {
 }
 
 
-proc ::sdk::patch_psu_init {} {	
-    set init_file $::sdk::workspace/$::sdk::hw_project/psu_init.tcl
-	
+proc ::sdk::patch_psu_init {} {
+    set init_file [alias_get_init_file psu_init.tcl]
+    
     exec sed -i -e "s/set psu/variable psu/g" $init_file
    
     puts "INFO: Patch psu_init file ($init_file)" 

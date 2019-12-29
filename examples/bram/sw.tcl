@@ -5,6 +5,7 @@ project::setBoard $board
 
 set workspace [pwd]/[lindex $argv 1].sdk
 project::setWorkspace $workspace
+project::setProjectName test
 
 
 

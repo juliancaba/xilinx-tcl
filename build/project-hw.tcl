@@ -1,14 +1,14 @@
 package provide hw 1.0
 
 
-
 proc ::project::create_hw_project {} {	
     set current_dir [pwd]
     create_project -force $::project::project_name $current_dir -part $::project::device_part
 
     set_property board_part $::project::board_part [current_project]
     set_property target_language VHDL [current_project]
-    set_property simulator_language VHDL [current_project]	
+    set_property simulator_language VHDL [current_project]
+    alias_set_extra_property
 }
 
 
@@ -24,10 +24,13 @@ proc ::project::synth {} {
 
 proc ::project::export_hardware {} {
     file mkdir [pwd]/$::project::project_name.sdk
-    write_hwdef -force  -file [pwd]/$::project::project_name.sdk/system_top.hdf
+    alias_write_hw_tool
+    #$write_hw_tool -fixed -force -file [pwd]/$::project::project_name.sdk/system_top.$write_hw_extension
+    #write_hwdef -force  -file [pwd]/$::project::project_name.sdk/system_top.hdf
     # 2019 version >> write_hw_platform -force  -file [pwd]/$::project::project_name.sdk/system_top.hdf
-    file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.sysdef [pwd]/$::project::project_name.sdk/system_top.hdf
-    ###$::bd::bd_name\_wrapper.hdf
+
+    #file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.$write_hw_hdf_ext [pwd]/$::project::project_name.sdk/system_top.hdf
+
     file copy -force [pwd]/$::project::project_name.runs/impl_1/$::bd::bd_name\_wrapper.bit [pwd]/$::project::project_name.sdk/fpga.bit	
 }
 

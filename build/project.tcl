@@ -1,6 +1,7 @@
 package provide project 1.0
 
 source INSTALL_PATH/build/project-utils.tcl
+source INSTALL_PATH/versions/[getToolchainVersion].tcl
 
 
 namespace eval ::project {

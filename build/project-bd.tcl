@@ -46,6 +46,37 @@ proc ::bd::automate_bus {bus_type connect_ip master slave} {
 }
 
 
+proc ::bd::add_file {hdlFile} {
+    set fileSplitted  [split $hdlFile {.}]
+    set typeFile [lindex $fileSplitted [llength $fileSplitted]-1]
+    switch $typeFile {
+	"vhd" {
+	    read_vhdl $hdlFile
+	}
+	"vhdl" {
+	    read_vhdl $hdlFile
+	}
+	"v" {
+	    read_verilog $hdlFile
+	}
+	"xci" {
+	    read_ip $hdlFile
+	}
+	"dcp" {
+	    read_checkpoint $hdlFile
+	}
+    }
+}
+
+
+proc ::bd::add_files_from_folder {folder} {
+    set files [glob -tails -dir $folder *{.vhd,.vhdl,.v,.xci,.dcp}]
+    foreach f $files {
+	bd::add_file $folder/$f
+    }
+}
+
+
 proc ::bd::add_constraints {xdcFile} {
     read_xdc $xdcFile
 }

@@ -8,6 +8,7 @@ namespace eval ::board {
 
     array set board_part_versions {
 	2019.2 "xilinx.com:zcu104:part0:1.1"
+	2019.1 "xilinx.com:zcu104:part0:1.1"
 	2018.3 "xilinx.com:zcu104:part0:1.1"
     }
 }
@@ -34,14 +35,17 @@ proc ::board::getBoardPart {vtoolchain} {
 }
 
 
-proc ::board::upload_binaries {} {
+proc ::board::upload_bitstream {} {
     connect
-    source /opt/Xilinx/SDK/2018.3/scripts/sdk/util/zynqmp_utils.tcl
+    #source /opt/Xilinx/SDK/2018.3/scripts/sdk/util/zynqmp_utils.tcl
 
     targets -set -filter {name =~ "PSU"}
     fpga $::sdk::workspace/fpga.bit
     puts "INFO: PL configured"
+}
 
+
+proc ::board::upload_sw {} {
     targets -set -filter {name =~"APU*"}
     loadhw $::sdk::workspace/system_top.hdf
     configparams force-mem-access 1
@@ -60,6 +64,12 @@ proc ::board::upload_binaries {} {
     dow $::sdk::workspace/$::sdk::sw_project_name/Debug/$::sdk::sw_project_name.elf
     configparams force-mem-access 0
     puts "INFO: PS configured"
+}
+
+
+proc ::board::upload_binaries {} {
+    board:upload_bitstream
+    board:upload_sw
 }
 
 

@@ -34,17 +34,28 @@ proc ::board::getBoardPart {vtoolchain} {
 }
 
 
-proc ::board::upload_binaries {} {
+proc ::board::upload_bitstream {} {
     connect	
     targets -set -filter {name =~ "ARM*#0"}
     rst
     fpga $::sdk::workspace/fpga.bit
+    puts "INFO: PL configured"
+}
 
+
+proc ::board::upload_sw {} {
     source [get_init_file ps7 $::sdk::workspace $::sdk::hw_project]
     ps7_init
     ps7_post_config
     loadhw $::sdk::workspace/system_top.hdf
     dow $::sdk::workspace/app/Debug/app.elf
+    puts "INFO: PS configured"
+}
+
+
+proc ::board::upload_binaries {} {
+    board::upload_bitstream
+    board::upload_sw
 }
 
 

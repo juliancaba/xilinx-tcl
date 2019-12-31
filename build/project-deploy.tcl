@@ -12,3 +12,9 @@ proc ::deploy::run {board} {
     loadTCL INSTALL_PATH/boards/$board.tcl
     board::run
 }
+
+
+proc ::deploy::upload_bitstream {board} {
+    loadTCL INSTALL_PATH/boards/$board.tcl
+    board::upload_bitstream
+}

@@ -8,6 +8,7 @@ namespace eval ::board {
 
     array set board_part_versions {
 	2019.2 "em.avnet.com:zed:part0:1.4"
+	2019.1 "em.avnet.com:zed:part0:1.4"
 	2018.3 "em.avnet.com:zed:part0:1.4"
 	2017.4 "em.avnet.com:zed:part0:1.3"
 	2016.4 "em.avnet.com:zed:part0:1.3"
@@ -37,17 +38,28 @@ proc ::board::getBoardPart {vtoolchain} {
 }
 
 
-proc ::board::upload_binaries {} {
+proc ::board::upload_bitstream {} {
     connect	
     targets -set -filter {name =~ "ARM*#0"}
     rst
     fpga $::sdk::workspace/fpga.bit
-	
+    puts "INFO: PL configured"
+}
+
+
+proc ::board::upload_sw {} {
     source [get_init_file ps7 $::sdk::workspace $::sdk::hw_project]
     ps7_init
     ps7_post_config
     loadhw $::sdk::workspace/system_top.hdf
     dow $::sdk::workspace/app/Debug/app.elf
+    puts "INFO: PS configured"
+}
+
+
+proc ::board::upload_binaries {} {
+    board::upload_bitstream
+    board::upload_sw
 }
 
 

@@ -44,6 +44,12 @@ proc ::project::export_hardware {} {
 }
 
 
+proc ::project::copy_bitstream {bitstream dst} {
+    file mkdir $dst
+    file copy -force [pwd]/$::project::project_name.runs/impl_1/$bitstream $dst/fpga.bit	
+}
+
+
 
 # add any type of source files
 proc ::project::add_src {files} {

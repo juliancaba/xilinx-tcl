@@ -10,7 +10,7 @@ namespace eval ::axi_dma {
     array set properties {
 	sg {CONFIG.c_include_sg "none" CONFIG.c_sg_include_stscntrl_strm "none"}
 	data_width {CONFIG.c_m_axi_mm2s_data_width "none"}
-	data_twidth {CONFIG.c_m_axis_mm2s_tdata_width "none"}
+	tdata_width {CONFIG.c_m_axis_mm2s_tdata_width "none"}
 	burst_size {CONFIG.c_mm2s_burst_size "none"}
     }
 }

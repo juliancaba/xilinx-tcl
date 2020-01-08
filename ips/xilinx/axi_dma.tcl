@@ -16,6 +16,15 @@ namespace eval ::axi_dma {
 }
 
 
+proc ::axi_dma::read_only {ip_name} {
+    set_property -dict [list CONFIG.c_include_s2mm {0}] [get_bd_cells $ip_name]
+}
+
+
+proc ::axi_dma::write_only {ip_name} {
+    set_property -dict [list CONFIG.c_include_mm2s {0}] [get_bd_cells $ip_name]
+}
+
 
 proc ::axi_dma::create_ip {ip_name ip_properties} {
     set ref  [create_bd_cell -type ip -vlnv $::axi_dma::ip_core_generator $ip_name]

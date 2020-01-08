@@ -10,5 +10,9 @@ source INSTALL_PATH/ips/xilinx/axi_gpio.tcl
 
 
 # ARCO
+source INSTALL_PATH/ips/arco/axis_intersection.tcl
+source INSTALL_PATH/ips/arco/axis_merge.tcl
+source INSTALL_PATH/ips/arco/axis_union.tcl
 source INSTALL_PATH/ips/arco/compress.tcl
 source INSTALL_PATH/ips/arco/decompress.tcl
+

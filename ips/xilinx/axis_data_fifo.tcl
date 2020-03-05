@@ -9,6 +9,7 @@ namespace eval ::axis_data_fifo {
 
     array set properties {
 	depth {CONFIG.FIFO_DEPTH "none"}
+	tdata_bytes {CONFIG.TDATA_NUM_BYTES.VALUE_SRC USER CONFIG.TDATA_NUM_BYTES "none"}
     }
 }
 

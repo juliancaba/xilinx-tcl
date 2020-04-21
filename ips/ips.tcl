@@ -4,6 +4,8 @@ package provide ips 1.0
 # Xilinx
 ############
 source INSTALL_PATH/ips/xilinx/axis_data_fifo.tcl
+source INSTALL_PATH/ips/xilinx/axis_fifo.tcl
+source INSTALL_PATH/ips/xilinx/axis_dwidth_converter.tcl
 source INSTALL_PATH/ips/xilinx/axis_register_slice.tcl
 source INSTALL_PATH/ips/xilinx/axis_broadcaster.tcl
 source INSTALL_PATH/ips/xilinx/axi_dma.tcl

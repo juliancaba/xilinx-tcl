@@ -7,6 +7,8 @@ namespace eval ::board {
     variable platform_name "zed" 
 
     array set board_part_versions {
+	2020.2 "em.avnet.com:zed:part0:1.4"
+	2020.1 "em.avnet.com:zed:part0:1.4"
 	2019.2 "em.avnet.com:zed:part0:1.4"
 	2019.1 "em.avnet.com:zed:part0:1.4"
 	2018.3 "em.avnet.com:zed:part0:1.4"

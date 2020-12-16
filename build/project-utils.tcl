@@ -42,7 +42,7 @@ proc get_init_file {ps workspace hw_project} {
     set init_file $ps\_init.tcl
 
     if {[getSW_IDE] == $VITIS} {
-	return $workspace/$hw_project/hw/$init_file
+	return $workspace/system_top/hw/$init_file
     } else {
 	return $workspace/$hw_project/$init_file
     }

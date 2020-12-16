@@ -22,7 +22,10 @@ run:
 	xsct run.tcl $(BOARD) $(PRJ)
 
 
+clean-sw:
+	$(RM) -rf $(PRJ).sdk/*_init* $(PRJ).sdk/app $(PRJ).sdk/standalone_bsp_0 $(PRJ).sdk/hw_platform_0
+
 clean:clean-all
 
 clean-all:
-	rm -rf $(TMP_FILES) $(PRJ_FILES)
+	$(RM) -rf $(TMP_FILES) $(PRJ_FILES)

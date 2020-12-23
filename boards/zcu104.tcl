@@ -7,6 +7,8 @@ namespace eval ::board {
     variable platform_name "ZCU104"
 
     array set board_part_versions {
+	2020.2 "xilinx.com:zcu104:part0:1.1"
+	2020.1 "xilinx.com:zcu104:part0:1.1"
 	2019.2 "xilinx.com:zcu104:part0:1.1"
 	2019.1 "xilinx.com:zcu104:part0:1.1"
 	2018.3 "xilinx.com:zcu104:part0:1.1"

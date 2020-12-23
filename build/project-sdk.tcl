@@ -15,7 +15,7 @@ proc ::sdk::create_sw_project {os_type src_files} {
     ::os::setProperties $::board::hard_processor $::sdk::bsp_suffix $::sdk::hw_project
 
     #puts $::sdk::sw_ide
-    if {$::sdk::sw_ide == $VITIS} {
+    if { [getSW_IDE] == $VITIS } {
 	::os::create_empty_app  $::sdk::sw_project_name
     } else {
 	sdk createhw -name $::sdk::hw_project -hwspec $::sdk::workspace/system_top.hdf
@@ -51,7 +51,9 @@ proc ::sdk::setBSPLibs {bsp_libs} {
 proc ::sdk::build {} {
     variable VITIS
 
-    if {$::sdk::sw_ide == $VITIS} {
+    puts "INFO: Building sw project ..."
+    
+    if { [getSW_IDE] == $VITIS } {
 	app build -name $::sdk::sw_project_name
     } else {
 	projects -build
@@ -82,10 +84,8 @@ proc ::sdk::patch_psu_init {} {
 
 proc ::sdk::patch_ps_init {} {
     set ps [string range $::board::hard_processor 0 2] 
-
-    puts $ps
     
-    if {"ps7" == $ps} {
+    if { "ps7" == $ps } {
 	sdk::patch_ps7_init
     } else {
 	sdk::patch_psu_init

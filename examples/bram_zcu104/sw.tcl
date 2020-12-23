@@ -1,5 +1,7 @@
 source /opt/xilinx-tcl/build/project.tcl
 
+puts "INFO: Building sw project ..."
+
 set board [lindex $argv 0]
 project::setBoard $board
 

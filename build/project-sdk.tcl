@@ -12,7 +12,6 @@ proc ::sdk::create_sw_project {os_type src_files} {
     file delete -force $::sdk::workspace/.Xil
     
     loadTCL INSTALL_PATH/os/$os_type.tcl
-    
     ::os::setProperties $::board::hard_processor $::sdk::bsp_suffix $::sdk::hw_project
 
     #puts $::sdk::sw_ide
@@ -78,4 +77,17 @@ proc ::sdk::patch_psu_init {} {
     exec sed -i -e "s/set psu/variable psu/g" $init_file
    
     puts "INFO: Patch psu_init file ($init_file)" 
+}
+
+
+proc ::sdk::patch_ps_init {} {
+    set ps [string range $::board::hard_processor 0 2] 
+
+    puts $ps
+    
+    if {"ps7" == $ps} {
+	sdk::patch_ps7_init
+    } else {
+	sdk::patch_psu_init
+    }
 }

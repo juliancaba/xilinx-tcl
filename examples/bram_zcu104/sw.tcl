@@ -13,6 +13,6 @@ project::setProjectName $prj
 sdk::create_sw_project standalone {"main.c"}
 
 sdk::build
-sdk::patch_ps7_init
+sdk::patch_ps_init
 
 exit

@@ -29,3 +29,9 @@ TCL scripts for building Xilinx-based projects
 | Vitis  2020.2 | [OK] | [  ] | [  ] |
 
 
+
+## ToDo
+* IP Package
+* Multi (sw-)processor issues
+* DPR
+

@@ -68,8 +68,8 @@ proc ::board::upload_sw {} {
 
 
 proc ::board::upload_binaries {} {
-    board:upload_bitstream
-    board:upload_sw
+    board::upload_bitstream
+    board::upload_sw
 }
 
 

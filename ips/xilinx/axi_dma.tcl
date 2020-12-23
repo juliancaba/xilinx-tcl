@@ -12,6 +12,7 @@ namespace eval ::axi_dma {
 	data_width {CONFIG.c_m_axi_mm2s_data_width "none"}
 	tdata_width {CONFIG.c_m_axis_mm2s_tdata_width "none"}
 	burst_size {CONFIG.c_mm2s_burst_size "none"}
+	length_width {CONFIG.c_sg_length_width "none"}
     }
 }
 

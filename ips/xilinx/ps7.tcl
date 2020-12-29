@@ -10,6 +10,7 @@ namespace eval ::ps7 {
     array set properties {
 	hp0 {CONFIG.PCW_USE_S_AXI_HP0 "none"}
 	freq0 {CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ "none"}
+	intren {CONFIG.PCW_USE_FABRIC_INTERRUPT "none" CONFIG.PCW_IRQ_F2P_INTR "none"}
     }
 }
 

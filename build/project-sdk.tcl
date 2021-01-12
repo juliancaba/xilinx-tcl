@@ -39,12 +39,21 @@ proc ::sdk::add_files_from_folder {folder} {
 
 
 proc ::sdk::setBSPLibs {bsp_libs} {
-    foreach it $bsp_libs {	
-	setlib -bsp $::sdk::os_type\_$::sdk::bsp_suffix -lib $it
-	configapp -app $::sdk::sw_project_name libraries $it
+    variable VITIS
+    
+    if { [getSW_IDE] == $VITIS } {
+	foreach it $bsp_libs {
+	    bsp setlib $it
+	}
+	bsp regenerate
+    } else {
+	foreach it $bsp_libs {	
+	    setlib -bsp $::sdk::os_type\_$::sdk::bsp_suffix -lib $it
+	    configapp -app $::sdk::sw_project_name libraries $it
+	}
+	updatemss -mss $::sdk::workspace/$::sdk::os_type\_$::sdk::bsp_suffix/system.mss
+	regenbsp -bsp $::sdk::os_type\_$::sdk::bsp_suffix
     }
-    updatemss -mss $::sdk::workspace/$::sdk::os_type\_$::sdk::bsp_suffix/system.mss
-    regenbsp -bsp $::sdk::os_type\_$::sdk::bsp_suffix
 }
 
 

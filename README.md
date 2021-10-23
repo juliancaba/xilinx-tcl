@@ -9,6 +9,8 @@ TCL scripts for building Xilinx-based projects
 * Vitis  2019.2
 * Vitis  2020.1
 * Vitis  2020.2
+* Vitis  2020.3 (ToDo)
+* Vitis  2021.1 (ToDo)
 
 
 ## Supported devices
@@ -27,6 +29,8 @@ TCL scripts for building Xilinx-based projects
 | Vitis  2019.2 | [OK] | [OK] | [  ] |
 | Vitis  2020.1 | [OK] | [OK] | [  ] |
 | Vitis  2020.2 | [OK] | [OK] | [  ] |
+| Vitis  2020.3 | [  ] | [  ] | [  ] |
+| Vitis  2021.1 | [  ] | [  ] | [  ] |
 
 
 

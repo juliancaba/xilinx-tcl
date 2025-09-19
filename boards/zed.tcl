@@ -12,6 +12,7 @@ namespace eval ::board {
 	2019.2 "em.avnet.com:zed:part0:1.4"
 	2019.1 "em.avnet.com:zed:part0:1.4"
 	2018.3 "em.avnet.com:zed:part0:1.4"
+	2018.2 "em.avnet.com:zed:part0:1.4"
 	2017.4 "em.avnet.com:zed:part0:1.3"
 	2016.4 "em.avnet.com:zed:part0:1.3"
 	2015.4 "xilinx.com:zc702:part0:0.9"

@@ -2,21 +2,21 @@ package provide zed 1.0
 
 
 namespace eval ::board {
-    variable device_part "xc7z020clg484-1"
+    variable device_part "xc7z030isbg485-2L"
     variable hard_processor "ps7_cortexa9_0"
     variable platform_name "zed" 
 
-    array set board_part_versions {
-	2020.2 "em.avnet.com:zed:part0:1.4"
-	2020.1 "em.avnet.com:zed:part0:1.4"
-	2019.2 "em.avnet.com:zed:part0:1.4"
-	2019.1 "em.avnet.com:zed:part0:1.4"
-	2018.2 "em.avnet.com:zed:part0:1.4"
-	2018.3 "em.avnet.com:zed:part0:1.4"
-	2017.4 "em.avnet.com:zed:part0:1.3"
-	2016.4 "em.avnet.com:zed:part0:1.3"
-	2015.4 "xilinx.com:zc702:part0:0.9"
-    }
+    # array set board_part_versions {
+    # 	2020.2 "em.avnet.com:zed:part0:1.4"
+    # 	2020.1 "em.avnet.com:zed:part0:1.4"
+    # 	2019.2 "em.avnet.com:zed:part0:1.4"
+    # 	2019.1 "em.avnet.com:zed:part0:1.4"
+    # 	2018.2 "xc7z030isbg485-2L"
+    # 	2018.3 "em.avnet.com:zed:part0:1.4"
+    # 	2017.4 "em.avnet.com:zed:part0:1.3"
+    # 	2016.4 "em.avnet.com:zed:part0:1.3"
+    # 	2015.4 "xilinx.com:zc702:part0:0.9"
+    # }
 }
 
 
@@ -31,10 +31,12 @@ proc ::board::getProcessor {} {
 
 
 proc ::board::getBoardPart {vtoolchain} {
-    set board_part [array get ::board::board_part_versions $vtoolchain]
-    if {[llength $board_part] == 2} {
-	return [lindex $board_part 1]
-    }
+    set board_part "xc7z030isbg485-2L"
+    return "xc7z030isbg485-2L"
+    # set board_part [array get ::board::board_part_versions $vtoolchain]
+    # if {[llength $board_part] == 2} {
+    # 	return [lindex $board_part 1]
+    # }
     puts $vtoolchain
     puts "ERROR: Toolchain version not supported"
     exit 1
